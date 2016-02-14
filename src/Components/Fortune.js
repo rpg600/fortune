@@ -1,14 +1,49 @@
 import React from 'react';
 
-const ListItem = ({key, children}) => (
-   <li key={key}>{children}</li>
+const ListItem = ({
+    key,
+    children
+}) => {
+    return (
+        <li key={key}>{children}</li>
+    )
+};
+
+const Vote = ({
+    voteDown,
+    count = 0,
+    voteUp
+}) => (
+    <div>
+        <a href="#" onClick={((e) => {
+             e.preventDefault();
+
+             return voteDown();
+         })}
+        >-</a>&nbsp;
+        <span>{count}</span>&nbsp;
+        <a href="#" onClick={((e) => {
+             e.preventDefault();
+
+             return voteUp();
+         })}>+</a>
+    </div>
 );
 
-const FortuneList = ({fortunes}) => (
+const FortuneList = ({
+    fortunes,
+    voteDown,
+    voteUp
+}) => (
     <ul>
-        {fortunes.map(fortune =>
+        {fortunes.map((fortune, index) =>
         <ListItem key={fortune.id}>
             {fortune.quote} by {fortune.author}
+            <Vote
+                voteDown={() => voteDown(index)}
+                count={fortune.votes}
+                voteUp={() => voteUp(index)}
+            />
         </ListItem>
         )}
     </ul>
