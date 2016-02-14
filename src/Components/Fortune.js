@@ -9,24 +9,22 @@ const ListItem = ({
     )
 };
 
+const Link = ({
+    onClick,
+    children
+}) => (
+    <a href="#" onClick={onClick}>{children}</a>
+);
+
 const Vote = ({
     voteDown,
     count = 0,
     voteUp
 }) => (
     <div>
-        <a href="#" onClick={((e) => {
-             e.preventDefault();
-
-             return voteDown();
-         })}
-        >-</a>&nbsp;
+        <Link onClick={voteDown}>-</Link>&nbsp;
         <span>{count}</span>&nbsp;
-        <a href="#" onClick={((e) => {
-             e.preventDefault();
-
-             return voteUp();
-         })}>+</a>
+        <Link onClick={voteUp}>+</Link>
     </div>
 );
 
