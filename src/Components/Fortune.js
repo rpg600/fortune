@@ -1,11 +1,10 @@
 import React from 'react';
 
 const ListItem = ({
-    key,
     children
 }) => {
     return (
-        <li key={key}>{children}</li>
+        <li>{children}</li>
     )
 };
 
@@ -28,24 +27,24 @@ const Vote = ({
     </div>
 );
 
-const FortuneList = ({
-    fortunes,
-    voteDown,
-    voteUp
-}) => (
-    <ul>
-        {fortunes.map((fortune, index) =>
-        <ListItem key={fortune.id}>
-            {fortune.quote} by {fortune.author}
-            <Vote
-                voteDown={() => voteDown(index)}
-                count={fortune.votes}
-                voteUp={() => voteUp(index)}
-            />
-        </ListItem>
-        )}
-    </ul>
-);
+const FortuneList = React.createClass({
+    render: function() {
+        return (
+            <ul>
+                {this.props.fortunes.map((fortune, index) =>
+                    <ListItem key={fortune.id}>
+                        {fortune.quote} by {fortune.author}
+                        <Vote
+                            voteDown={() => this.props.voteDown(index)}
+                            count={fortune.votes}
+                            voteUp={() => this.props.voteUp(index)}
+                        />
+                    </ListItem>
+                )}
+            </ul>
+        )
+    }
+});
 
 const FortuneForm = React.createClass({
     getInitialState: function() {
