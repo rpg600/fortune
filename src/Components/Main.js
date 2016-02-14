@@ -12,7 +12,7 @@ const Main = React.createClass({
         };
     },
     onSubmit: function(fortune) {
-        let fortunes = [...this.state.fortunes, Object.assign({}, fortune, {id: this.state.fortunes.length + 1, votes: 0})];
+        let fortunes = [...this.state.fortunes, Object.assign({}, fortune, {id: this.state.fortunes.length + 1})];
 
         this.setState({fortunes: fortunes});
     },

@@ -52,7 +52,8 @@ const FortuneForm = React.createClass({
         return {
             fortune: {
                 quote: '',
-                author: ''
+                author: '',
+                votes: 0
             }
         };
     },
