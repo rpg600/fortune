@@ -1,22 +1,26 @@
 import React from 'react';
-import {FortuneList, FortuneForm} from './Fortune';
+import FortuneForm from './FortuneForm';
+import FortuneList from './FortuneList';
 
-const Main = React.createClass({
-    getInitialState: function() {
-        return {
+export default class Main extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
             fortunes: [
                 {quote: 'Banananaaa', author: 'Reinis', id: 1, votes: 10},
                 {quote: 'Banananaaa', author: 'Reinis', id: 2, votes: 2},
                 {quote: 'Banananaaa', author: 'Reinis', id: 3, votes: 3}
             ]
         };
-    },
-    onSubmit: function(fortune) {
+    }
+
+    onSubmit(fortune) {
         let fortunes = [...this.state.fortunes, Object.assign({}, fortune, {id: this.state.fortunes.length + 1})];
 
         this.setState({fortunes: fortunes});
-    },
-    voteDown: function(index) {
+    }
+
+    voteDown(index) {
         if (this.state.fortunes[index].votes <= 0) {
             return;
         }
@@ -25,13 +29,15 @@ const Main = React.createClass({
 
         this.updateFortuneVote(index, newVotes);
 
-    },
-    voteUp: function(index) {
+    }
+
+    voteUp(index) {
         let newVotes = this.state.fortunes[index].votes + 1;
 
         this.updateFortuneVote(index, newVotes);
-    },
-    updateFortuneVote: function(index, newVotes) {
+    }
+
+    updateFortuneVote(index, newVotes) {
         let fortunes = [
             ...this.state.fortunes.slice(0, index),
             Object.assign({}, this.state.fortunes[index], {votes: newVotes}),
@@ -39,19 +45,18 @@ const Main = React.createClass({
         ];
 
         this.setState({fortunes: fortunes});
-    },
-    render: function() {
+    }
+
+    render() {
        return (
            <div>
                <FortuneList
                    fortunes={this.state.fortunes}
-                   voteDown={this.voteDown}
-                   voteUp={this.voteUp}
+                   voteDown={this.voteDown.bind(this)}
+                   voteUp={this.voteUp.bind(this)}
                />
-               <FortuneForm onSubmit={this.onSubmit} />
+               <FortuneForm onSubmit={this.onSubmit.bind(this)} />
            </div>
        );
     }
-});
-
-export default Main;
+};
